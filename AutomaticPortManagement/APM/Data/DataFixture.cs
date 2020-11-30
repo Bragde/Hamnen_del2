@@ -31,9 +31,11 @@
 
             for (int i = 0; i < numberOfBoats; i++)
             {
-                StringBuilder randomLetters = IdGenerator.RandomLetters(3);
+                // DLm: Denna vaiabel används ej. Id slumpas i resp båt klass.
+                StringBuilder randomLetters = IdGenerator.RandomLetters(3); 
+
                 Random r = new Random();
-                int randomInt = r.Next(1, 4);
+                int randomInt = r.Next(1, 5);
                 if (randomInt == 1)
                 {
                     Motorboat motorboat = new Motorboat();
@@ -48,6 +50,11 @@
                 {
                     CargoShip cargoShip = new CargoShip();
                     boats.Add(cargoShip);
+                }
+                if (randomInt == 4)
+                {
+                    Rowboat rowboat = new Rowboat();
+                    boats.Add(rowboat);
                 }
             }
 

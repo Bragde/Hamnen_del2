@@ -11,7 +11,7 @@ namespace APM.Models
             Id = "M-" + IdGenerator.RandomLetters(3);
             Name = "Motorboat";
             SlotNeeded = 1;
-            StayLength = 3;
+            StayLength = 1;
             Weight = random.Next(200,3001);
             MaxSpeed = random.Next(0,61);
             HorsePower = random.Next(10,1001);

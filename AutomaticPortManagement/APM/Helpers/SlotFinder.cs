@@ -2,6 +2,8 @@
 {
     using APM.Models;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
     public partial class Program
     {
@@ -16,6 +18,7 @@
 
                 while (findSlot)
                 {
+
                     for (int i = firstAvailableSlot; i <= slots.Count; i++)
                     {
                         //makes sure to not overload the port.
@@ -35,6 +38,33 @@
                             findSlot = false;
                             report.UnplacedBoats.Add(boat);
                             break;
+                        }
+
+                        // PLACE A ROWBOAT IN THE SAME SLOT AS ANOTHER ROWBOAT
+                        if(!(slots[i].boat is null))
+                        {
+                            // If both the parked and arriving boat is rowboat
+                            if(slots[i].boat.Name == "Rowboat" && boat.Name == "Rowboat")
+                            {
+                                // Get the parked rowboat from report of parked boats  
+                                var parkedRowboat = report.PlacedBoats.FirstOrDefault(b => b.Id == slots[i].boat.Id);
+                                if(parkedRowboat.Id.Length == 5)
+                                {
+                                    report.PlacedBoats
+                                        .Where(
+                                            b => Regex.IsMatch(b.Id, $@"\b{slots[i].boat.Id}\b")
+                                            && !b.Id.Contains(" "))
+                                        .Select(b => {
+                                            b.Id += $" {boat.Id}";
+                                            return b;
+                                        })
+                                        .ToList();
+
+                                    findSlot = false;
+                                    break;
+                                } 
+
+                            }
                         }
 
                         if (slots[i].Available)

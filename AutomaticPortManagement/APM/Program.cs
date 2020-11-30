@@ -10,6 +10,7 @@
         public static void Main(string[] args)
         {
             List<Port> slots = DataFixture.Createslots(25);
+
             int dayNumber = 0;
             Printer printer = new Printer();
 
